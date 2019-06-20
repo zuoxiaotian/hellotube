@@ -71,7 +71,7 @@
 							<div class="form-group row m-b-15">
 								<label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
 								<div class="col-md-8 col-sm-8">
-									<button id="create" onclick="create()" class="btn btn-green" data-toggle="modal" data-target="#exampleModal">Create</button>
+									<button id="create_download" onclick="create_download()" class="btn btn-green" data-toggle="modal" data-target="#exampleModal">Download</button>
 
 								</div>
 							</div>
@@ -107,6 +107,9 @@
 			</button>
 		  </div>
 		  <div class="modal-body">
+			  <div class="spinner-border m-5" role="status" id="loading">
+			  	<span class="sr-only">Loading...</span>
+			  </div>
 			<a id="download" href="#" class="alert-link">click here to download</a>
 		  </div>
 		  <div class="modal-footer">
@@ -166,16 +169,22 @@
 			});
 		});
 
-		function create(){
+		function create_download(){
+		  	$('#myInput').trigger('focus')
+		  	$('#download').css('display', 'none');
+		  	$('#loading').css('display', '');
+
 			$.ajax({
 				type: "POST",
-				url: "/create",
+				url: "/create_download",
 				data: {"url": $("#url").val(),
 					"quality": $("#quality").val(),
 				},
 				success: function(filename){
+		  			$('#download').css('display', '');
+		  			$('#loading').css('display', 'none');
 					$("#download").attr("href", "/download/" + filename);
-		  			$('#myInput').trigger('focus')
+					$("#download").text("Click here to download " + filename);
 				}
 			});
 		}
