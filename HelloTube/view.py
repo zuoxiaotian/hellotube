@@ -29,6 +29,9 @@ def create(request):
         url = request.POST['url']
         quality = request.POST['quality']
 
+    # Wait for 5 seconds
+    time.sleep(5)
+    
     the_file_name = "test.mp3"
     return HttpResponse(the_file_name, content_type="application/text")
 
