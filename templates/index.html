@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<header lang="en">
+	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<link href="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+	<link href="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/font-awesome/css/all.min.css" rel="stylesheet" />
+	<link href="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/animate/animate.min.css" rel="stylesheet" />
+	<link href="https://seantheme.com/color-admin-v4.3/admin/assets/css/default/style.min.css" rel="stylesheet" />
+	<link href="https://seantheme.com/color-admin-v4.3/admin/assets/css/default/style-responsive.min.css" rel="stylesheet" />
+	<link href="https://seantheme.com/color-admin-v4.3/admin/assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+	<style>
+		.content {
+			margin-left: 0px;
+			padding: 20px 30px;
+		}
+	</style>
+</header>
+
+<body>
+	<div id="page-container" class="fade page-header-fixed page-sidebar-fixed show">
+		<div id="header" class="header navbar-default">
+			<div class="navbar-header">
+				<a href="index.html" class="navbar-brand"><span class="navbar-logo"></span> <b>Color</b> Admin</a>
+			</div>
+		</div>
+		<div id="content" class="content">
+			<div class="row">
+				<div class="col-lg-4">
+				</div>
+				<div class="col-lg-4">
+                    {% csrf_token %}
+					<div class="panel panel-inverse" data-sortable-id="form-stuff-1">
+						<div class="panel-body">
+							<div class="form-group row m-b-15">
+								<label class="col-form-label col-md-4">YouTube URL</label>
+								<div class="col-md-8">
+									<input id="url" class="form-control m-b-5" placeholder="Enter your youtube url here" />
+								</div>
+							</div>
+							<div class="form-group row m-b-15">
+								<label class="col-md-4 col-sm-4 col-form-label">Select MP3 quality :</label>
+								<div class="col-md-4 col-sm-4">
+									<select class="form-control" id="quality" name="selectBox" data-parsley-required="true">
+										<option value="32" selected>32</option>
+										<option value="64">64</option>
+										<option value="96">96</option>
+										<option value="128">128</option>
+									</select>
+								</div>
+								<div class="col-md-4 col-sm-4">
+									<button id="extract" type="submit" class="btn btn-green">Extract</button>
+								</div>
+							</div>
+
+							<div class="form-group row m-b-15">
+								<label class="col-form-label col-md-4">File name</label>
+								<div class="col-md-8">
+									<input id="name" class="form-control m-b-5"/>
+								</div>
+							</div>
+							<div class="form-group row m-b-15">
+								<label class="col-form-label col-md-4">File size</label>
+								<div class="col-md-8">
+									<text id="size" class="form-control m-b-5"/>
+								</div>
+							</div>
+							<div class="form-group row m-b-15">
+								<label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
+								<div class="col-md-8 col-sm-8">
+									<button id="create" onclick="create()" class="btn btn-green" data-toggle="modal" data-target="#exampleModal">Create</button>
+
+								</div>
+							</div>
+							<div class="form-group row m-b-15">
+								<label class="col-form-label col-md-4">Email address</label>
+								<div class="col-md-8">
+									<input id="email" class="form-control m-b-5" placeholder="Enter your email address here" />
+									<small class="f-s-12 text-grey-darker">We'll never share your email with anyone else.</small>
+								</div>
+							</div>
+							<div class="form-group row m-b-0">
+								<label class="col-md-4 col-sm-4 col-form-label">&nbsp;</label>
+								<div class="col-md-8 col-sm-8">
+									<button id="send" type="submit" class="btn btn-primary">Send</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+		  <div class="modal-header">
+			<h5 class="modal-title" id="exampleModalLabel">Download link</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
+		  <div class="modal-body">
+			<a id="download" href="#" class="alert-link">click here to download</a>
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/jquery/jquery-3.3.1.min.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/jquery-ui/jquery-ui.min.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/crossbrowserjs/html5shiv.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/crossbrowserjs/respond.min.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/js-cookie/js.cookie.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/js/theme/default.min.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/js/apps.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
+
+	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/parsley/dist/parsley.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/plugins/highlight/highlight.common.js"></script>
+	<script src="https://seantheme.com/color-admin-v4.3/admin/assets/js/demo/render.highlight.js"></script>
+	<script>
+
+		$('#myModal').on('shown.bs.modal', function () {
+		})
+		$("#extract").on( "click", function() {
+			console.log(123);
+			$.ajax({
+				type: "POST",
+				url: "/extract",
+				data: {"url": $("#url").val()},
+				success: function(msg){
+					$("#name").val(msg['filename']);
+					$("#size").text(msg['size']);
+				}
+			});
+		});
+
+
+		$("#send").on( "click", function() {
+			$.ajax({
+				type: "POST",
+				url: "/send",
+				data: {"url": $("#url").val(),
+					"email": $("#email").val(),
+					"quality": $("#quality").val(),
+				},
+				success: function(msg){
+					alert(msg);
+					console.log(123);
+				}
+			});
+		});
+
+		function create(){
+			$.ajax({
+				type: "POST",
+				url: "/create",
+				data: {"url": $("#url").val(),
+					"quality": $("#quality").val(),
+				},
+				success: function(filename){
+					$("#download").attr("href", "/download/" + filename);
+		  			$('#myInput').trigger('focus')
+				}
+			});
+		}
+
+
+	</script>
+</body>
+
+</html>
